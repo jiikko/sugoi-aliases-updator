@@ -2,10 +2,10 @@
 
 COMMANDS = %w(add rm list)
 
-filepath =     ARGV[0]
-command =      ARGV[1]
-target_email = ARGV[2]
-option =       ARGV[3]
+filepath =         ARGV[0]
+command =          ARGV[1]
+target_email =     ARGV[2]
+direction_labels = ARGV[3]
 
 if $*.first == '--version'
   require "sugoi_aliases_updator/version"
@@ -24,13 +24,13 @@ unless COMMANDS.include?(command)
 end
 
 unless /\w*@.*/ =~ target_email
-  puts "Usage: must email"
+  puts "Usage: email"
   exit 1
 end
 
-unless option
+if %w(add rm).include?(command) && direction_labels.nil?
   need = { 'add' => 'TO', 'rm' => 'FROM' }
-  puts "Usage: need ARG #{need[command]}=label1,label2"
+  puts "Usage: #{need[command]}=label1,label2"
   exit 1
 end
 
@@ -40,10 +40,10 @@ aliases_parser = AliasesParser.new(filepath)
 
 case command
 when 'add'
-  labels = AliasesParser.parse_arg3(option) # Array
+  labels = AliasesParser.parse_direction_labels(direction_labels)
   aliases_parser.add(target_email, to: labels)
 when 'rm'
-  labels = AliasesParser.parse_arg3(option) # Array
+  labels = AliasesParser.parse_direction_labels(direction_labels)
   aliases_parser.rm(target_email, from: labels)
 when 'list'
   aliases_parser.list(target_email)

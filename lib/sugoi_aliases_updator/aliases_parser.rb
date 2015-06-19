@@ -1,7 +1,7 @@
 class SugoiAliasesUpdator::AliasesParser
   attr_accessor :changed_labels
 
-  def self.parse_arg3(string)
+  def self.parse_direction_labels(string)
     if /(TO|FROM)=(.*)$/ =~ string
       labels = $2.split(/,\s?/)
     else
