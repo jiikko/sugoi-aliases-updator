@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+COMMANDS = %w(add rm list)
+
+filepath =     ARGV[0]
+command =      ARGV[1]
+target_email = ARGV[2]
+option =       ARGV[3]
+
+if $*.first == '--version'
+  require "sugoi_aliases_updator/version"
+  puts SugoiAliasesUpdator::VERSIOSN
+  exit 0
+end
+
+unless File.exists?(filepath)
+  puts "file is not found "
+  exit 1
+end
+
+unless COMMANDS.include?(command)
+  puts "Usage: (#{COMMANDS.join("|")})"
+  exit 1
+end
+
+unless /\w*@.*/ =~ target_email
+  puts "Usage: must email"
+  exit 1
+end
+
+unless option
+  need = { 'add' => 'TO', 'rm' => 'FROM' }
+  puts "Usage: need ARG #{need[command]}=label1,label2"
+  exit 1
+end
+
+require "sugoi_aliases_updator"
+include SugoiAliasesUpdator
+aliases_parser = AliasesParser.new(filepath)
+
+case command
+when 'add'
+  labels = AliasesParser.parse_arg3(option) # Array
+  aliases_parser.add(target_email, to: labels)
+when 'rm'
+  labels = AliasesParser.parse_arg3(option) # Array
+  aliases_parser.rm(target_email, from: labels)
+when 'list'
+  aliases_parser.list(target_email)
+end
