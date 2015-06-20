@@ -12,13 +12,12 @@ class SugoiAliasesUpdator::AliasesParser
   def initialize(filepath)
     @native_lines = File.readlines(filepath)
     @changed_labels = []
-    init
   end
 
   def add(target_email, to: )
     to.each do |x|
-      unless @label_mails_hash[x].include?(target_email)
-        @label_mails_hash[x].push(target_email)
+      unless label_mails_hash[x].include?(target_email)
+        label_mails_hash[x].push(target_email)
         @changed_labels << x
       end
     end
@@ -27,9 +26,9 @@ class SugoiAliasesUpdator::AliasesParser
 
   def rm(target_email, from: )
     from.each do |x|
-      if @label_mails_hash[x].include?(target_email)
-        puts @label_mails_hash[x]
-        @label_mails_hash[x].delete(target_email)
+      if label_mails_hash[x].include?(target_email)
+        puts label_mails_hash[x]
+        label_mails_hash[x].delete(target_email)
         @changed_labels << x
       end
     end
@@ -37,6 +36,11 @@ class SugoiAliasesUpdator::AliasesParser
   end
 
   def list(target_email)
+    finded = []
+    label_mails_hash.each do |key, value|
+      finded.push(key) if value.include?(target_email)
+    end
+    puts finded
   end
 
   def render!
@@ -44,7 +48,7 @@ class SugoiAliasesUpdator::AliasesParser
     @native_lines.each do |line|
       line_paser = LineParser.new(line)
       if line_paser.aliaes_line? || @changed_labels.include?(line_paser.label)
-        line = "#{line_paser.label}: #{@label_mails_hash[line_paser.label].join(", ")}"
+        line = "#{line_paser.label}: #{label_mails_hash[line_paser.label].join(", ")}"
       end
       new_lines << line
     end
@@ -53,8 +57,8 @@ class SugoiAliasesUpdator::AliasesParser
 
   private
 
-  def init
-    @label_mails_hash = {}.tap do |h|
+  def label_mails_hash
+    @label_mails_hash ||= {}.tap do |h|
       @native_lines.each do |line|
         line_paser = LineParser.new(line)
         if line_paser.aliaes_line?
