@@ -4,11 +4,8 @@ module SugoiAliasesUpdator
     attr_accessor :changed_labels
 
     def self.parse_direction_labels(string)
-      if /(TO|FROM)=(.*)$/ =~ string
-        labels = $2.split(/,\s?/)
-      else
-        puts "Usage: TO|FROM=values"
-      end
+      raise("Oops '#{string}'") unless /(TO|FROM)=(.*)$/ =~ string
+      $2.split(/,\s?/)
     end
 
     def initialize(filepath)
@@ -29,7 +26,6 @@ module SugoiAliasesUpdator
     def rm(target_email, from: )
       from.each do |x|
         if label_mails_hash[x].include?(target_email)
-          puts label_mails_hash[x]
           label_mails_hash[x].delete(target_email)
           @changed_labels << x
         end
@@ -42,7 +38,7 @@ module SugoiAliasesUpdator
       label_mails_hash.each do |key, value|
         finded.push(key) if value.include?(target_email)
       end
-      finded.join
+      finded.join(' ')
     end
 
     def render!
