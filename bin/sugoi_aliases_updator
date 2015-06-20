@@ -9,7 +9,7 @@ direction_labels = ARGV[3]
 
 if $*.first == '--version'
   require "sugoi_aliases_updator/version"
-  puts SugoiAliasesUpdator::VERSIOSN
+  puts SugoiAliasesUpdator::VERSION
   exit 0
 end
 
@@ -41,10 +41,10 @@ aliases_parser = AliasesParser.new(filepath)
 case command
 when 'add'
   labels = AliasesParser.parse_direction_labels(direction_labels)
-  aliases_parser.add(target_email, to: labels)
+  puts aliases_parser.add(target_email, to: labels)
 when 'rm'
   labels = AliasesParser.parse_direction_labels(direction_labels)
-  aliases_parser.rm(target_email, from: labels)
+  puts aliases_parser.rm(target_email, from: labels)
 when 'list'
-  aliases_parser.list(target_email)
+  puts aliases_parser.list(target_email)
 end

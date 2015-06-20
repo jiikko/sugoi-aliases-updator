@@ -1,16 +1,12 @@
 module SugoiAliasesUpdator
   class LineParser
-    attr_accessor :emails_line, :label
+    attr_accessor :emails_line, :label, :is_aliaes_line, :margin
 
     def initialize(line)
-      @line = line
-    end
-
-    def aliaes_line?
-      if /^(.*):\s*(.*)$/ =~ @line
-        @emails_line = $2
-        @label = $1
-      end
+      @is_aliaes_line = /^(.*):(\s*)([\w@\., ]*)$/ === line
+      @label = $1
+      @margin = $2
+      @emails_line = $3
     end
   end
 end
