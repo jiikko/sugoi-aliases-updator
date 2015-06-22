@@ -9,6 +9,49 @@ gem 'sugoi_aliases_updator'
 ```
 
 ## Usage
+```
+$ cat /etc/aliases
+# General redirections for pseudo accounts
+bin:            root
+daemon:         root
+named:          root
+nobody:         root
+uucp:           root
+www:            root, n905i.1214@gmail.com
+ftp-bugs:       root
+postfix:        root, n905i.1214@gmail.com
+
+```
+
+```
+$ sugoi_aliases_updator /etc/aliases add test@exmple.net TO=www
+# General redirections for pseudo accounts
+bin:            root
+daemon:         root
+named:          root
+nobody:         root
+uucp:           root
+www:            root, n905i.1214@gmail.com, test@exmple.net
+ftp-bugs:       root
+postfix:        root, n905i.1214@gmail.com
+```
+
+```
+$ sugoi_aliases_updator /etc/aliases rm test@exmple.net TO=www,postfix
+# General redirections for pseudo accounts
+bin:            root
+daemon:         root
+named:          root
+nobody:         root
+uucp:           root
+www:            root
+ftp-bugs:       root
+postfix:        root
+```
+```
+$ sugoi_aliases_updator /etc/aliases list n905i.1214@gmail.com
+www,postfix
+```
 
 
 ## Contributing
