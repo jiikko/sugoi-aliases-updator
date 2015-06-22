@@ -11,7 +11,6 @@ gem 'sugoi_aliases_updator'
 ## Usage
 ```
 $ cat /etc/aliases
-# General redirections for pseudo accounts
 bin:            root
 daemon:         root
 named:          root
@@ -25,7 +24,6 @@ postfix:        root, n905i.1214@gmail.com
 
 ```
 $ sugoi_aliases_updator /etc/aliases add test@exmple.net TO=www
-# General redirections for pseudo accounts
 bin:            root
 daemon:         root
 named:          root
@@ -37,8 +35,7 @@ postfix:        root, n905i.1214@gmail.com
 ```
 
 ```
-$ sugoi_aliases_updator /etc/aliases rm test@exmple.net TO=www,postfix
-# General redirections for pseudo accounts
+$ sugoi_aliases_updator /etc/aliases rm n905i.1214@gmail.com TO=www,postfix
 bin:            root
 daemon:         root
 named:          root
