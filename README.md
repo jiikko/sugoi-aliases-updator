@@ -14,11 +14,6 @@ gem 'sugoi_aliases_updator'
 ## Usage
 ```
 $ cat /etc/aliases
-bin:            root
-daemon:         root
-named:          root
-nobody:         root
-uucp:           root
 www:            root, n905i.1214@gmail.com
 ftp-bugs:       root
 postfix:        root, n905i.1214@gmail.com
@@ -27,11 +22,6 @@ postfix:        root, n905i.1214@gmail.com
 
 ```
 $ sugoi_aliases_updator /etc/aliases add test@exmple.net TO=www
-bin:            root
-daemon:         root
-named:          root
-nobody:         root
-uucp:           root
 www:            root, n905i.1214@gmail.com, test@exmple.net
 ftp-bugs:       root
 postfix:        root, n905i.1214@gmail.com
@@ -39,11 +29,6 @@ postfix:        root, n905i.1214@gmail.com
 
 ```
 $ sugoi_aliases_updator /etc/aliases rm n905i.1214@gmail.com TO=www,postfix
-bin:            root
-daemon:         root
-named:          root
-nobody:         root
-uucp:           root
 www:            root
 ftp-bugs:       root
 postfix:        root
