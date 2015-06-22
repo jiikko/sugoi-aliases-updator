@@ -1,6 +1,6 @@
 # SugoiAliasesUpdator
 
-/etc/aliases の更新をする。
+/etc/aliasesなファイルを読み込んで追加削除した結果を標準出力に出す。
 
 ## Installation
 
