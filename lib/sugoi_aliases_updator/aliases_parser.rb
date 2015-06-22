@@ -1,3 +1,4 @@
+class SugoiAliasesUpdator::KnownLabel; end
 module SugoiAliasesUpdator
   class AliasesParser
 
@@ -14,6 +15,7 @@ module SugoiAliasesUpdator
     end
 
     def add(target_email, to: )
+      check_labels!(to)
       to.each do |x|
         unless label_mails_hash[x].include?(target_email)
           label_mails_hash[x].push(target_email)
@@ -24,6 +26,7 @@ module SugoiAliasesUpdator
     end
 
     def rm(target_email, from: )
+      check_labels!(from)
       from.each do |x|
         if label_mails_hash[x].include?(target_email)
           label_mails_hash[x].delete(target_email)
@@ -64,6 +67,13 @@ module SugoiAliasesUpdator
             h[line_paser.label] = line_paser.emails_line.split(/\,\s?/)
           end
         end
+      end
+    end
+
+    def check_labels!(inputed_labels)
+      unknown_labels = inputed_labels -  label_mails_hash.keys
+      if unknown_labels.size > 0
+        raise(SugoiAliasesUpdator::KnownLabel,  "unknown labels #{unknown_labels.join(', ')}")
       end
     end
   end

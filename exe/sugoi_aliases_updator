@@ -2,7 +2,7 @@
 
 COMMANDS = %w(add rm list)
 
-filepath =         ARGV[0]
+filepath =         ARGV[0] || ''
 command =          ARGV[1]
 target_email =     ARGV[2]
 direction_labels = ARGV[3]
@@ -19,12 +19,12 @@ unless File.exists?(filepath)
 end
 
 unless COMMANDS.include?(command)
-  puts "Usage: (#{COMMANDS.join("|")})"
+  puts "input (#{COMMANDS.join("|")})"
   exit 1
 end
 
 unless /\w*@.*/ =~ target_email
-  puts "Usage: email"
+  puts "input email"
   exit 1
 end
 

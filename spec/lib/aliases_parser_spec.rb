@@ -70,6 +70,18 @@ www:		root
       expect(actuial).to eq expected
       source_aliases_flle.unlink
     end
+
+    context 'when inputed unknown label' do
+      it 'show message' do
+        aliases_parser = SugoiAliasesUpdator::AliasesParser.new(
+          source_aliases_flle.path
+        )
+        expect {
+          aliases_parser.rm('n905i.1214@gmail.com', from: %w(hoge))
+        }.to raise_error(SugoiAliasesUpdator::KnownLabel)
+        source_aliases_flle.unlink
+      end
+    end
   end
 
   describe '#list' do
