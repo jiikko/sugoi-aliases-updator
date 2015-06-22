@@ -8,6 +8,9 @@
 gem 'sugoi_aliases_updator'
 ```
 
+## Requirement
+'ruby' ~> '2.1'
+
 ## Usage
 ```
 $ cat /etc/aliases
