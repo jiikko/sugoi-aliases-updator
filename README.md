@@ -9,7 +9,7 @@ gem 'sugoi_aliases_updator'
 ```
 
 ## Requirement
-'ruby' ~> '2.1'
+'ruby' >= '2.1'
 
 ## Usage
 add, rm, listのみ。
