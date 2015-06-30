@@ -25,11 +25,21 @@ module SugoiAliasesUpdator
     end
 
     def rm(target_email, from: )
+      if ['ALL'] == from
+        label_mails_hash.each do |label, emails|
+          if emails.include?(target_email)
+            label_mails_hash[label].delete(target_email)
+            @changed_labels << label
+          end
+        end
+        return render!
+      end
+
       check_labels!(from)
-      from.each do |x|
-        if label_mails_hash[x].include?(target_email)
-          label_mails_hash[x].delete(target_email)
-          @changed_labels << x
+      from.each do |label|
+        if label_mails_hash[label].include?(target_email)
+          label_mails_hash[label].delete(target_email)
+          @changed_labels << label
         end
       end
       render!

@@ -39,8 +39,8 @@ www:		root, n905i.1214@gmail.com, java@java.com, admin@github.com
       aliases_parser = SugoiAliasesUpdator::AliasesParser.new(
         source_aliases_flle.path
       )
-      actuial  = aliases_parser.add('admin@github.com', to: %w(bin www))
-      expect(actuial).to eq expected
+      actual = aliases_parser.add('admin@github.com', to: %w(bin www))
+      expect(actual).to eq expected
       source_aliases_flle.unlink
     end
 
@@ -62,8 +62,8 @@ www:		root, n905i.1214@gmail.com, java@java.com
         aliases_parser = SugoiAliasesUpdator::AliasesParser.new(
           source_aliases_flle.path
         )
-        actuial  = aliases_parser.add('n905i.1214@gmail.com', to: %w(named www))
-        expect(actuial).to eq expected
+        actual = aliases_parser.add('n905i.1214@gmail.com', to: %w(named www))
+        expect(actual).to eq expected
         source_aliases_flle.unlink
       end
     end
@@ -87,9 +87,34 @@ www:		root, java@java.com
       aliases_parser = SugoiAliasesUpdator::AliasesParser.new(
         source_aliases_flle.path
       )
-      actuial = aliases_parser.rm('n905i.1214@gmail.com', from: %w(www named))
-      expect(actuial).to eq expected
+      actual = aliases_parser.rm('n905i.1214@gmail.com', from: %w(www named))
+      expect(actual).to eq expected
       source_aliases_flle.unlink
+    end
+
+    context 'when FROM=ALL' do
+      let(:expected) { <<-ALIASES
+MAILER-DAEMON:	postmaster
+postmaster:	root
+
+# General redirections for pseudo accounts
+bin:		root
+daemon:		root
+named:		root
+nobody:		root
+uucp:		root
+www:		root, java@java.com
+                       ALIASES
+      }
+
+      it 'remove all target' do
+        aliases_parser = SugoiAliasesUpdator::AliasesParser.new(
+          source_aliases_flle.path
+        )
+        actual = aliases_parser.rm('n905i.1214@gmail.com', from: %w(ALL))
+        expect(actual).to eq expected
+        source_aliases_flle.unlink
+      end
     end
 
     context 'when inputed unknown label' do
@@ -111,8 +136,8 @@ www:		root, java@java.com
       aliases_parser = SugoiAliasesUpdator::AliasesParser.new(
         source_aliases_flle.path
       )
-      actuial = aliases_parser.list('n905i.1214@gmail.com')
-      expect(actuial).to eq expected
+      actual = aliases_parser.list('n905i.1214@gmail.com')
+      expect(actual).to eq expected
       source_aliases_flle.unlink
     end
   end
