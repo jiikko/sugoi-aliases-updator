@@ -5,7 +5,7 @@ describe SugoiAliasesUpdator::LineParser do
 
   subject { SugoiAliasesUpdator::LineParser.new(line) }
 
-  context '区切り文字がタブの時' do
+  context 'when seplator is \t' do
     let(:line) { 'root:		 admin@exmaple.com, hoge@exmaple.com, postfix@exmaple.com' }
     it 'be valid margin' do
       expect(subject.margin).to eq '		 '
@@ -25,7 +25,7 @@ describe SugoiAliasesUpdator::LineParser do
     end
   end
 
-  context '区切り文字がスペースの時' do
+  context 'when seplator is \s' do
     it 'be valid margin' do
       expect(subject.margin).to eq '  '
     end
