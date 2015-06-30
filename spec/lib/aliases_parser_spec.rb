@@ -13,7 +13,7 @@ postmaster:	root
 
 # General redirections for pseudo accounts
 bin:		root
-daemon:		root
+daemon:		root, sample@sample.com
 named:		root, n905i.1214@gmail.com
 nobody:		root, n905i.1214@gmail.com
 uucp:		root
@@ -33,7 +33,7 @@ postmaster:	root
 
 # General redirections for pseudo accounts
 bin:		root, admin@github.com
-daemon:		root
+daemon:		root, sample@sample.com
 named:		root, n905i.1214@gmail.com
 nobody:		root, n905i.1214@gmail.com
 uucp:		root
@@ -46,25 +46,6 @@ www:		root, n905i.1214@gmail.com, java@java.com, admin@github.com
       ).to eq expected
     end
 
-    context 'when TO=email' do
-      let(:expected) { <<-ALIASES
-MAILER-DAEMON:	postmaster
-postmaster:	root
-
-# General redirections for pseudo accounts
-bin:		root, admin@github.com
-daemon:		root
-named:		root, n905i.1214@gmail.com
-nobody:		root, n905i.1214@gmail.com
-uucp:		root
-www:		root, n905i.1214@gmail.com, java@java.com, admin@github.com
-                       ALIASES
-      }
-
-      it '渡されたemailの所属しているlabelを追加すること' do
-      end
-    end
-
     context 'when exist email' do
       let(:expected) { <<-ALIASES
 MAILER-DAEMON:	postmaster
@@ -72,7 +53,7 @@ postmaster:	root
 
 # General redirections for pseudo accounts
 bin:		root
-daemon:		root
+daemon:		root, sample@sample.com
 named:		root, n905i.1214@gmail.com
 nobody:		root, n905i.1214@gmail.com
 uucp:		root
@@ -94,7 +75,7 @@ postmaster:	root
 
 # General redirections for pseudo accounts
 bin:		root
-daemon:		root
+daemon:		root, sample@sample.com
 named:		root
 nobody:		root, n905i.1214@gmail.com
 uucp:		root
@@ -114,7 +95,7 @@ postmaster:	root
 
 # General redirections for pseudo accounts
 bin:		root
-daemon:		root
+daemon:		root, sample@sample.com
 named:		root
 nobody:		root
 uucp:		root
