@@ -70,7 +70,7 @@ module SugoiAliasesUpdator
     end
 
     def check_labels!(inputed_labels)
-      unknown_labels = inputed_labels -  label_mails_hash.keys
+      unknown_labels = inputed_labels - label_mails_hash.keys
       if unknown_labels.size > 0
         raise("unknown labels #{unknown_labels.join(', ')}")
       end

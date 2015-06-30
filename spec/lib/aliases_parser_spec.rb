@@ -1,5 +1,4 @@
 require 'spec_helper'
-
 require 'tempfile'
 
 describe SugoiAliasesUpdator::AliasesParser do
@@ -18,7 +17,7 @@ daemon:		root
 named:		root, n905i.1214@gmail.com
 nobody:		root, n905i.1214@gmail.com
 uucp:		root
-www:		root, n905i.1214@gmail.com
+www:		root, n905i.1214@gmail.com, java@java.com
                          ALIASES
   }
 
@@ -33,7 +32,7 @@ daemon:		root
 named:		root, n905i.1214@gmail.com
 nobody:		root, n905i.1214@gmail.com
 uucp:		root
-www:		root, n905i.1214@gmail.com, admin@github.com
+www:		root, n905i.1214@gmail.com, java@java.com, admin@github.com
                      ALIASES
     }
 
@@ -58,7 +57,7 @@ daemon:		root
 named:		root
 nobody:		root, n905i.1214@gmail.com
 uucp:		root
-www:		root
+www:		root, java@java.com
                      ALIASES
     }
 

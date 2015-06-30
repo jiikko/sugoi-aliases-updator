@@ -3,7 +3,7 @@ module SugoiAliasesUpdator
     attr_accessor :emails_line, :label, :is_aliaes_line, :margin
 
     def initialize(line)
-      @is_aliaes_line = /^(.*):(\s*)([\w@\., ]*)$/ === line
+      @is_aliaes_line = /^(.*):(\s*)([\w@\., -]*)/ === line
       @label = $1
       @margin = $2
       @emails_line = $3
