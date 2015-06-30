@@ -35,7 +35,6 @@ uucp:		root
 www:		root, n905i.1214@gmail.com, java@java.com, admin@github.com
                      ALIASES
     }
-
     it 'add target' do
       aliases_parser = SugoiAliasesUpdator::AliasesParser.new(
         source_aliases_flle.path
@@ -43,6 +42,30 @@ www:		root, n905i.1214@gmail.com, java@java.com, admin@github.com
       actuial  = aliases_parser.add('admin@github.com', to: %w(bin www))
       expect(actuial).to eq expected
       source_aliases_flle.unlink
+    end
+
+    context 'when exist email' do
+      let(:expected) { <<-ALIASES
+MAILER-DAEMON:	postmaster
+postmaster:	root
+
+# General redirections for pseudo accounts
+bin:		root
+daemon:		root
+named:		root, n905i.1214@gmail.com
+nobody:		root, n905i.1214@gmail.com
+uucp:		root
+www:		root, n905i.1214@gmail.com, java@java.com
+                       ALIASES
+      }
+      it "don't duplicate" do
+        aliases_parser = SugoiAliasesUpdator::AliasesParser.new(
+          source_aliases_flle.path
+        )
+        actuial  = aliases_parser.add('n905i.1214@gmail.com', to: %w(named www))
+        expect(actuial).to eq expected
+        source_aliases_flle.unlink
+      end
     end
   end
 
@@ -60,7 +83,6 @@ uucp:		root
 www:		root, java@java.com
                      ALIASES
     }
-
     it 'remove target' do
       aliases_parser = SugoiAliasesUpdator::AliasesParser.new(
         source_aliases_flle.path
