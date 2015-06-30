@@ -47,8 +47,7 @@ www:		root, n905i.1214@gmail.com, java@java.com, admin@github.com
     end
 
     context 'when TO=email' do
-      describe '#add' do
-        let(:expected) { <<-ALIASES
+      let(:expected) { <<-ALIASES
 MAILER-DAEMON:	postmaster
 postmaster:	root
 
@@ -59,15 +58,15 @@ named:		root, n905i.1214@gmail.com
 nobody:		root, n905i.1214@gmail.com
 uucp:		root
 www:		root, n905i.1214@gmail.com, java@java.com, admin@github.com
-                         ALIASES
-        }
+                       ALIASES
+      }
 
-        it '渡されたemailの所属しているlabelを追加すること' do
-        end
+      it '渡されたemailの所属しているlabelを追加すること' do
       end
+    end
 
-      context 'when exist email' do
-        let(:expected) { <<-ALIASES
+    context 'when exist email' do
+      let(:expected) { <<-ALIASES
 MAILER-DAEMON:	postmaster
 postmaster:	root
 
@@ -78,18 +77,18 @@ named:		root, n905i.1214@gmail.com
 nobody:		root, n905i.1214@gmail.com
 uucp:		root
 www:		root, n905i.1214@gmail.com, java@java.com
-                         ALIASES
-        }
-        it "don't duplicate" do
-          expect(
-            aliases_parser.add('n905i.1214@gmail.com', to: %w(named www))
-          ).to eq expected
-        end
+                       ALIASES
+      }
+      it "don't duplicate" do
+        expect(
+          aliases_parser.add('n905i.1214@gmail.com', to: %w(named www))
+        ).to eq expected
       end
     end
+  end
 
-    describe '#rm' do
-      let(:expected) { <<-ALIASES
+  describe '#rm' do
+    let(:expected) { <<-ALIASES
 MAILER-DAEMON:	postmaster
 postmaster:	root
 
@@ -100,16 +99,16 @@ named:		root
 nobody:		root, n905i.1214@gmail.com
 uucp:		root
 www:		root, java@java.com
-                       ALIASES
-      }
-      it 'remove target' do
-        expect(
-          aliases_parser.rm('n905i.1214@gmail.com', from: %w(www named))
-        ).to eq expected
-      end
+                     ALIASES
+    }
+    it 'remove target' do
+      expect(
+        aliases_parser.rm('n905i.1214@gmail.com', from: %w(www named))
+      ).to eq expected
+    end
 
-      context 'when FROM=ALL' do
-        let(:expected) { <<-ALIASES
+    context 'when FROM=ALL' do
+      let(:expected) { <<-ALIASES
 MAILER-DAEMON:	postmaster
 postmaster:	root
 
@@ -120,32 +119,31 @@ named:		root
 nobody:		root
 uucp:		root
 www:		root, java@java.com
-                         ALIASES
-        }
+                       ALIASES
+      }
 
-        it 'remove all target' do
-          expect(
-            aliases_parser.rm('n905i.1214@gmail.com', from: %w(ALL))
-          ).to eq expected
-        end
-      end
-
-      context 'when inputed unknown label' do
-        it 'show message' do
-          expect {
-            aliases_parser.rm('n905i.1214@gmail.com', from: %w(hoge))
-          }.to raise_error(RuntimeError)
-        end
+      it 'remove all target' do
+        expect(
+          aliases_parser.rm('n905i.1214@gmail.com', from: %w(ALL))
+        ).to eq expected
       end
     end
 
-    describe '#list' do
-      let(:expected) { 'named,nobody,www' }
-      it 'return labels' do
-        expect(
-          aliases_parser.list('n905i.1214@gmail.com')
-        ).to eq expected
+    context 'when inputed unknown label' do
+      it 'be exception' do
+        expect {
+          aliases_parser.rm('n905i.1214@gmail.com', from: %w(hoge))
+        }.to raise_error(RuntimeError)
       end
+    end
+  end
+
+  describe '#list' do
+    let(:expected) { 'named,nobody,www' }
+    it 'return labels' do
+      expect(
+        aliases_parser.list('n905i.1214@gmail.com')
+      ).to eq expected
     end
   end
 end
