@@ -28,7 +28,7 @@ postfix:        root, n905i.1214@gmail.com
 ```
 
 ```
-$ sugoi_aliases_updator /etc/aliases rm n905i.1214@gmail.com TO=www,postfix
+$ sugoi_aliases_updator /etc/aliases rm n905i.1214@gmail.com FROM=www,postfix
 www:            root
 ftp-bugs:       root
 postfix:        root
