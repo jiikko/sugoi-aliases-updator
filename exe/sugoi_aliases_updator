@@ -8,7 +8,7 @@ cli.check_input
 include SugoiAliasesUpdator
 aliases_parser = AliasesParser.new(cli.filepath)
 
-case command
+case cli.command
 when 'add'
   puts aliases_parser.add(cli.target_email, cli.direction_labels)
 when 'rm', 'del'

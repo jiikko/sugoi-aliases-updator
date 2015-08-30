@@ -1,6 +1,6 @@
 module SugoiAliasesUpdator
   class Cli
-    attr_reader :filepath, :target_email
+    attr_reader :filepath, :target_email, :command
 
     COMMANDS = %w(add rm del list show)
 
@@ -55,7 +55,7 @@ module SugoiAliasesUpdator
     def check_direction
       if %w(add rm).include?(@command) && @direction_labels.nil?
         need = { 'add' => 'TO', 'rm' => 'FROM' }
-        puts "Usage: #{need[command]}=label1,label2"
+        puts "Usage: #{need[@command]}=label1,label2"
         exit 1
       end
     end
