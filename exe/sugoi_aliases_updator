@@ -1,50 +1,18 @@
 #!/usr/bin/env ruby
 
-COMMANDS = %w(add rm list)
-
-filepath =         ARGV[0] || ''
-command =          ARGV[1]
-target_email =     ARGV[2]
-direction_labels = ARGV[3]
-
-if $*.first == '--version'
-  require "sugoi_aliases_updator/version"
-  puts SugoiAliasesUpdator::VERSION
-  exit 0
-end
-
-unless File.exists?(filepath)
-  puts "file is not found "
-  exit 1
-end
-
-unless COMMANDS.include?(command)
-  puts "input (#{COMMANDS.join("|")})"
-  exit 1
-end
-
-unless /\w*@.*/ =~ target_email
-  puts "input email"
-  exit 1
-end
-
-if %w(add rm).include?(command) && direction_labels.nil?
-  need = { 'add' => 'TO', 'rm' => 'FROM' }
-  puts "Usage: #{need[command]}=label1,label2"
-  exit 1
-end
-
 require "sugoi_aliases_updator"
+
+cli = SugoiAliasesUpdator::Cli.new(ARGV)
+cli.check_input
+
 include SugoiAliasesUpdator
-aliases_parser = AliasesParser.new(filepath)
+aliases_parser = AliasesParser.new(cli.filepath)
 
 case command
 when 'add'
-  labels = AliasesParser.parse_direction_labels(direction_labels)
-  puts aliases_parser.add(target_email, to: labels)
-when 'rm'
-  labels = AliasesParser.parse_direction_labels(direction_labels)
-  puts aliases_parser.rm(target_email, from: labels)
-when 'list'
-  puts aliases_parser.list(target_email)
+  puts aliases_parser.add(cli.target_email, cli.direction_labels)
+when 'rm', 'del'
+  puts aliases_parser.rm(cli.target_email, cli.direction_labels)
+when 'list', 'show'
+  puts aliases_parser.list(cli.target_email)
 end

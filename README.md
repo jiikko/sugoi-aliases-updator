@@ -12,7 +12,7 @@ gem 'sugoi_aliases_updator'
 'ruby' >= '2.1'
 
 ## Usage
-add, rm, listのみ。
+add, rm(del), list(show)のみ。
 ```
 $ cat /etc/aliases
 www:            root, n905i.1214@gmail.com

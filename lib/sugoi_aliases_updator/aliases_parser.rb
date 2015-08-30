@@ -3,17 +3,12 @@ module SugoiAliasesUpdator
 
     attr_accessor :changed_labels
 
-    def self.parse_direction_labels(string)
-      raise("Oops '#{string}'") unless /(TO|FROM)=(.*)$/ =~ string
-      $2.split(/,\s?/)
-    end
-
     def initialize(filepath)
       @native_lines = File.readlines(filepath)
       @changed_labels = []
     end
 
-    def add(target_email, to: )
+    def add(target_email, to)
       check_labels!(to)
       to.each do |x|
         unless label_mails_hash[x].include?(target_email)
@@ -24,7 +19,7 @@ module SugoiAliasesUpdator
       render!
     end
 
-    def rm(target_email, from: )
+    def rm(target_email, from)
       if ['ALL'] == from
         label_mails_hash.each do |label, emails|
           if emails.include?(target_email)

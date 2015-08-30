@@ -42,7 +42,7 @@ www:		root, n905i.1214@gmail.com, java@java.com, admin@github.com
     }
     it 'add target' do
       expect(
-        aliases_parser.add('admin@github.com', to: %w(bin www))
+        aliases_parser.add('admin@github.com', %w(bin www))
       ).to eq expected
     end
 
@@ -62,7 +62,7 @@ www:		root, n905i.1214@gmail.com, java@java.com
       }
       it "don't duplicate" do
         expect(
-          aliases_parser.add('n905i.1214@gmail.com', to: %w(named www))
+          aliases_parser.add('n905i.1214@gmail.com', %w(named www))
         ).to eq expected
       end
     end
@@ -84,7 +84,7 @@ www:		root, java@java.com
     }
     it 'remove target' do
       expect(
-        aliases_parser.rm('n905i.1214@gmail.com', from: %w(www named))
+        aliases_parser.rm('n905i.1214@gmail.com', %w(www named))
       ).to eq expected
     end
 
@@ -105,7 +105,7 @@ www:		root, java@java.com
 
       it 'remove all target' do
         expect(
-          aliases_parser.rm('n905i.1214@gmail.com', from: %w(ALL))
+          aliases_parser.rm('n905i.1214@gmail.com', %w(ALL))
         ).to eq expected
       end
     end
@@ -113,7 +113,7 @@ www:		root, java@java.com
     context 'when inputed unknown label' do
       it 'be exception' do
         expect {
-          aliases_parser.rm('n905i.1214@gmail.com', from: %w(hoge))
+          aliases_parser.rm('n905i.1214@gmail.com', %w(hoge))
         }.to raise_error(RuntimeError)
       end
     end
