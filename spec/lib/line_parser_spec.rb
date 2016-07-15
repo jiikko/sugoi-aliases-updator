@@ -44,4 +44,21 @@ describe SugoiAliasesUpdator::LineParser do
       ).to eq 'root'
     end
   end
+
+  context 'when blank emails' do
+    let(:line) { 'root: ' }
+    it 'be valid is_aliaes_line' do
+      expect(subject.is_aliaes_line).to eq true
+    end
+    it 'be valid emails' do
+      expect(
+        subject.emails_line
+      ).to eq ''
+    end
+    it 'be valid label' do
+      expect(
+        subject.label
+      ).to eq 'root'
+    end
+  end
 end
