@@ -4,8 +4,8 @@
 
 ## Installation
 
-```ruby
-gem 'sugoi_aliases_updator'
+```shell
+gem i sugoi_aliases_updator
 ```
 
 ## Requirement
